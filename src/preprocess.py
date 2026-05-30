@@ -49,10 +49,15 @@ def main(args):
     print(f"  Total records downloaded: {len(df):,}")
 
     print("▶ Filtering and cleaning …")
-    # Filter for English notes
-    if "language" in df.columns:
-        df = df[df["language"] == "en"].copy()
-        print(f"  Records after English filter: {len(df):,}")
+    # Optional language filter. NOTE: this dataset is a small multilingual synthetic
+    # set (34 languages x 53 rows = 1,802). The English subset is only 53 rows (one
+    # per ICD code), which cannot be split into train/val/test. Default keeps all
+    # languages so the model has enough examples per class to train and evaluate.
+    if "language" in df.columns and args.language and args.language.lower() != "all":
+        df = df[df["language"] == args.language].copy()
+        print(f"  Records after language filter ({args.language}): {len(df):,}")
+    else:
+        print(f"  Keeping all languages: {len(df):,} records")
 
     # Ensure required columns exist and drop empty text
     df = df[["id", "code", "name", "journal_note"]].dropna(subset=["code", "journal_note"])
@@ -153,5 +158,7 @@ if __name__ == "__main__":
     parser.add_argument("--output_dir",  default="data/processed/")
     parser.add_argument("--top_k_codes", type=int, default=50)
     parser.add_argument("--max_notes",   type=int, default=60000)
+    parser.add_argument("--language",     default="all",
+                        help="Language code to filter (e.g. 'en'), or 'all' to keep every language.")
     args = parser.parse_args()
     main(args)

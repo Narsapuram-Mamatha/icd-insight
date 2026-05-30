@@ -149,7 +149,7 @@ class ICD10Predictor:
         strategy: str = "qlora",
         threshold: float = 0.5,
         max_length: int = 2048,
-        base_model_id: str = "NLP4Science/BioClinical-ModernBERT-base",
+        base_model_id: str = "thomas-sounack/BioClinical-ModernBERT-base",
     ):
         from src.model import load_adapter_model
 
