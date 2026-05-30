@@ -216,3 +216,32 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ─── ICD-Insight Project ─────────────────────────────────────────────────────
+
+# Raw MIMIC data (large, restricted access — never commit)
+data/raw/
+data/processed/
+data/faiss_index/
+
+# Full model weights (too large for GitHub — only LoRA adapters in checkpoints/)
+*.bin
+*.pt
+*.pth
+# Allow LoRA adapter safetensors (small, ~50 MB)
+!checkpoints/adapter_model.safetensors
+!checkpoints/adapter_config.json
+!checkpoints/tokenizer_config.json
+!checkpoints/label_binarizer.pkl
+!checkpoints/training_results.json
+
+# Generated patient report PDFs (may contain PHI)
+reports/
+*.pdf
+
+# Wandb run logs
+wandb/
+
+# Colab-generated temp files
+*.tmp
+sample_data/
