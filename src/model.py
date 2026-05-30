@@ -34,14 +34,15 @@ from transformers import (
 # Constants
 # ─────────────────────────────────────────────────────────────────────────────
 
-BASE_MODEL_ID = "NLP4Science/BioClinical-ModernBERT-base"
+# `NLP4Science/BioClinical-ModernBERT-base` is not publicly accessible (HTTP 401);
+# use the canonical public BioClinical ModernBERT (MIT license, same 150M model).
+BASE_MODEL_ID = "thomas-sounack/BioClinical-ModernBERT-base"
 
-# LoRA target modules for ModernBERT attention + FFN layers
+# LoRA target modules for ModernBERT attention + FFN layers.
+# ModernBERT names its linears Wqkv (fused QKV) / Wo (attn out) / Wi (MLP in).
 MODERNBERT_LORA_TARGETS = [
-    "self_attn.q_proj",
-    "self_attn.k_proj",
-    "self_attn.v_proj",
-    "self_attn.o_proj",
+    "Wqkv",
+    "Wo",
 ]
 
 
